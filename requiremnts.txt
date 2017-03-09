@@ -1,0 +1,11 @@
+Django==1.10.6
+Markdown==2.6.8
+Pillow==3.4.2
+django-filter==1.0.1
+django-paypal==0.3.3
+django-tinymce==2.6.0
+djangorestframework==3.6.1
+pinax-stripe==3.3.0
+pytz==2016.7
+requests==2.12.4
+stripe==1.44.0
