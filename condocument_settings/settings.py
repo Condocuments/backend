@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+from django.contrib import admin
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -36,8 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # extra
+    # condo
+    'condos',
+    'people',
+
+    # 3rd parties
     'rest_framework',
+
 ]
 
 MIDDLEWARE = [
@@ -80,6 +87,11 @@ DATABASES = {
     }
 }
 
+EMPTY_VALUE = '---'
+admin.site.empty_value_display = EMPTY_VALUE
+
+ADMIN_TITLE = 'Condocuments Administration'
+
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -108,6 +120,8 @@ REST_FRAMEWORK = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
+
+AUTH_USER_MODEL = 'people.User'
 
 LANGUAGE_CODE = 'en-us'
 

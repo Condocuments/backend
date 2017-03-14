@@ -18,7 +18,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from rest_framework import routers
 
-import settings
+from condocument_settings import settings
+
+admin.site.site_header = settings.ADMIN_TITLE
 
 router = routers.DefaultRouter()
 # router.register()
