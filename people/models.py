@@ -9,9 +9,10 @@ def validate_ssn(text):
 
 
 class User(AbstractUser):
-    ssn = models.TextField(_('SSN'), max_length=15, blank=True, unique=True, validators=[validate_ssn, ])
-    license = models.TextField(_('ID or License'), max_length=20, blank=True, unique=True)
+    ssn = models.CharField(_('SSN'), max_length=15, blank=True, unique=True, validators=[validate_ssn, ])
+    license = models.CharField(_('ID or License'), max_length=20, blank=True, unique=True)
     birth_date = models.DateField(null=True, blank=True)
+    profile_picture = models.ImageField(verbose_name=_('Profile Picture'), upload_to='Profile', blank=True, null=True)
 
     def __str__(self):
         return self.username

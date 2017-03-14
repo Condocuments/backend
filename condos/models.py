@@ -15,8 +15,11 @@ class Condo(models.Model):
         verbose_name = _('Condo')
         verbose_name_plural = _('Condos')
 
-    name = models.TextField(verbose_name=_('Name'), max_length=100)
+    name = models.CharField(verbose_name=_('Name'), max_length=100)
     address = models.OneToOneField(to='Address', verbose_name=_('Address'), related_name='condo', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Address(models.Model):
@@ -30,6 +33,10 @@ class Address(models.Model):
     state = models.CharField(verbose_name=_('State'), default='FL', max_length=20)
     zip_code = models.IntegerField(verbose_name=_('Zip Code'))
 
+    def __str__(self):
+        return self.line_1 + ' ' + self.apt if self.apt else '' + ', ' + str(self.city) + ', ' + str(
+            self.state) + ' ' + str(self.zip_code)
+
 
 class Application(models.Model):
     class Meta:
@@ -39,3 +46,7 @@ class Application(models.Model):
     pdf = models.FileField(verbose_name=_('PDF'), upload_to='PDF')
     type = models.CharField(verbose_name=_('Type'), choices=Types.choices(), max_length=10, default='Both')
     code = models.TextField(verbose_name=_('Code'), blank=True, null=True)
+    condo = models.ForeignKey(to=Condo, verbose_name=_('Condo'), related_name='applications', blank=True, null=True)
+
+    def __str__(self):
+        return '-'.join((self.condo.name, self.type))
