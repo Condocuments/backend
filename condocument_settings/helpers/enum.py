@@ -11,3 +11,8 @@ class Types(ChoicesEnum):
     BOTH = 'Both'
     LEASE = 'Lease'
     RENT = 'Rent'
+
+
+class ContentType(ChoicesEnum):
+    CONDO = 'Condo'
+    USER = 'User'

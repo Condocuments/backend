@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from people.models import Content, User
+from people.models import User
+from contents.models import Content
 
 
 # Register your models here.
