@@ -1,0 +1,35 @@
+[
+  {
+    "model": "condos.Bedroom",
+    "pk": 1,
+    "fields": {
+      "name": "Studio",
+      "quantity": 0
+    }
+  },
+  {
+    "model": "condos.Bedroom",
+    "pk": 2,
+    "fields": {
+      "name": "Bedroom",
+      "quantity": 1
+    }
+  },
+  {
+    "model": "condos.Bedroom",
+    "pk": 3,
+    "fields": {
+      "name": "Bedroom",
+      "quantity": 2
+    }
+  },
+  {
+    "model": "condos.Bedroom",
+    "pk": 4,
+    "fields": {
+      "name": "Bedroom",
+      "quantity": 3
+    }
+  }
+
+]

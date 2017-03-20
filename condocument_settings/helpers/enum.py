@@ -16,3 +16,8 @@ class Types(ChoicesEnum):
 class ContentType(ChoicesEnum):
     CONDO = 'Condo'
     USER = 'User'
+
+
+class PropertyType(ChoicesEnum):
+    RENT = 'For rent'
+    SALE = 'For sale'

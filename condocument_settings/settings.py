@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'condos',
     'people',
     'contents',
+    'initials',
 
     # 3rd parties
     'rest_framework',
