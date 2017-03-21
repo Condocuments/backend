@@ -73,7 +73,7 @@ class Bedroom(models.Model):
         verbose_name_plural = _('Bedroom')
 
     name = models.CharField(_('Name'), max_length=50)
-    quantity = models.IntegerField(_('Quantity'), default=1)
+    quantity = models.IntegerField(_('Quantity'), default=0)
 
     def __str__(self):
         return ' - '.join((self.name, str(self.quantity)))
@@ -86,7 +86,7 @@ class BedroomQuantity(models.Model):
 
     bedroom = models.ForeignKey(to=Bedroom, verbose_name=_('Bedroom'), related_name='bedroom_offer')
     condo = models.ForeignKey(to=Condo, verbose_name=_('Condo'), related_name='Condo_offer')
-    type = models.CharField(verbose_name=_('Type'), choices=Types.choices(), max_length=10)
+    type = models.CharField(verbose_name=_('Type'), choices=PropertyType.choices(), max_length=10)
     quantity = models.IntegerField(verbose_name=_('Quantity'), default=0)
 
     def __str__(self):
@@ -106,7 +106,7 @@ class Address(models.Model):
     area = models.CharField(verbose_name=_('Area'), max_length=30, blank=True, null=True)
 
     def __str__(self):
-        return self.line_1 + ' ' + self.apt if self.apt else '' + ', ' + str(self.city) + ', ' + str(
+        return self.line_1 + ' ' + (self.apt if self.apt else '') + ', ' + str(self.city) + ', ' + str(
             self.state) + ' ' + str(self.zip_code)
 
 
