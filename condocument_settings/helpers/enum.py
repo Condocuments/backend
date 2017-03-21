@@ -9,7 +9,7 @@ class ChoicesEnum(Enum):
 
 class Types(ChoicesEnum):
     BOTH = 'Both'
-    LEASE = 'Lease'
+    PURCHASE = 'Purchase'
     RENT = 'Rent'
 
 

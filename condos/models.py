@@ -116,7 +116,7 @@ class Application(models.Model):
         verbose_name_plural = _('Applications')
 
     pdf = models.FileField(verbose_name=_('PDF'), upload_to='PDF', null=True, blank=True)
-    type = models.CharField(verbose_name=_('Type'), choices=Types.choices(), max_length=10, default=Types.BOTH)
+    type = models.CharField(verbose_name=_('Type'), choices=Types.choices(), max_length=10, default=Types.BOTH.value)
     code = models.TextField(verbose_name=_('Code'), blank=True, null=True)
     condo = models.ForeignKey(to=Condo, verbose_name=_('Condo'), related_name='applications', blank=True, null=True)
 

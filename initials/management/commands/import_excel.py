@@ -2,9 +2,19 @@ import csv
 import os
 
 from django.core.management import BaseCommand
+from django.core.files import File
 
-from condocument_settings.helpers.enum import PropertyType
-from condos.models import Condo, Address, BedroomQuantity, Bedroom
+from condocument_settings.helpers.enum import PropertyType, Types
+from condos.models import Condo, Address, BedroomQuantity, Bedroom, Application
+
+pdf = {
+    '1060 Brickell': (
+        '1060 Brickell Brickell Condominium Application.pdf', '1060 Brickell Brickell Condominium Application.pdf'),
+    'Brickell Bay Club Condo': (
+        'Brickell Bay Club Condominium Application Purchase.pdf',
+        'Brickell Bay Club Condominium Application Lease.pdf'),
+    'Icon Brickell': ('3 Icon Brickell Condominium Application Re-Sale.pdf', '')
+}
 
 
 class Command(BaseCommand):
@@ -77,5 +87,27 @@ class Command(BaseCommand):
                 _ = BedroomQuantity.objects.create(bedroom=bedroom, condo=condo, type=PropertyType.RENT.value,
                                                    quantity=quantity)
 
-                print(str(condo))
+                ###
+                # Application
+                ###
+                if pdf[condo.name][0] == pdf[condo.name][1]:
+                    path = open(os.path.join('initials', 'fixture', 'PDF', pdf[condo.name][0]), 'rb')
+                    file = File(path)
+                    _ = Application.objects.create(condo=condo, type=Types.BOTH.value, pdf=file)
+                    path.close()
+                    file.close()
+                    continue
+                if pdf[condo.name][0]:
+                    path = open(os.path.join('initials', 'fixture', 'PDF', pdf[condo.name][0]), 'rb')
 
+                    file = File(path)
+                    _ = Application.objects.create(condo=condo, type=Types.PURCHASE.value, pdf=file)
+                    path.close()
+                    file.close()
+                if pdf[condo.name][1]:
+                    path = open(os.path.join('initials', 'fixture', 'PDF', pdf[condo.name][1]), 'rb')
+                    file = File(path)
+                    _ = Application.objects.create(condo=condo, type=Types.RENT.value, pdf=file)
+                    file.close()
+                    path.close()
+                print(str(condo))
