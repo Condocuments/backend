@@ -19,11 +19,22 @@ from django.contrib import admin
 from rest_framework import routers
 
 from condocument_settings import settings
+from condos.views import CondoViewSet, AddressViewSet, UnitViewSet
+from people.views import UserViewSet
+
+
+def merge_strings(string, merge):
+    """Merges simple strings."""
+    return string % merge
+
 
 admin.site.site_header = settings.ADMIN_TITLE
 
 router = routers.DefaultRouter()
-# router.register()
+router.register(merge_strings(r'%s', 'condos'), CondoViewSet)
+router.register(merge_strings(r'%s', 'unit'), UnitViewSet)
+router.register(merge_strings(r'%s', 'address'), AddressViewSet)
+router.register(merge_strings(r'%s', 'users'), UserViewSet, base_name='users')
 
 urlpatterns = [
     url(r'^', include(router.urls)),

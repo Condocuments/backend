@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import slugify
 
 from condocument_settings.helpers.enum import Types, PropertyType
 
@@ -16,6 +17,7 @@ class Condo(models.Model):
         verbose_name_plural = _('Condos')
 
     name = models.CharField(verbose_name=_('Name'), max_length=100)
+    slug = models.SlugField(verbose_name=_('Slug'), max_length=150)
     address = models.OneToOneField(to='Address', verbose_name=_('Address'), related_name='condo', blank=True, null=True)
     phone = models.CharField(verbose_name=_('Phone Number'), max_length=20, blank=True, null=True)
     location = models.CharField(verbose_name=_('Location'), max_length=20, blank=True, null=True)
@@ -33,6 +35,12 @@ class Condo(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(Condo, self).save(force_insert, force_update, using, update_fields)
 
 
 class Unit(models.Model):
@@ -85,7 +93,7 @@ class BedroomQuantity(models.Model):
         verbose_name_plural = _('Bedroom Quantity')
 
     bedroom = models.ForeignKey(to=Bedroom, verbose_name=_('Bedroom'), related_name='bedroom_offer')
-    condo = models.ForeignKey(to=Condo, verbose_name=_('Condo'), related_name='Condo_offer')
+    condo = models.ForeignKey(to=Condo, verbose_name=_('Condo'), related_name='condo_offer')
     type = models.CharField(verbose_name=_('Type'), choices=PropertyType.choices(), max_length=10)
     quantity = models.IntegerField(verbose_name=_('Quantity'), default=0)
 

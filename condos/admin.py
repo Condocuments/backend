@@ -19,6 +19,7 @@ class BedroomQuantityAdmin(admin.StackedInline):
 class CondoAdmin(admin.ModelAdmin):
     list_filter = ('name', 'address')
     list_display = ('name', 'address')
+    prepopulated_fields = {'slug': ('name',)}
     inlines = [BedroomQuantityAdmin, ApplicationAdmin]
 
 
