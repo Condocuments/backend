@@ -43,7 +43,7 @@ class Unit(models.Model):
     number = models.CharField(_('Number'), max_length=100, db_index=True)
     mls_number = models.CharField(_('MLS Number'), max_length=50, db_index=True, unique=True)
     condo = models.ForeignKey(Condo, verbose_name=_('Condo'), related_name='units', blank=True, null=True)
-    st = models.CharField('St', max_length=10, blank=True, null=True)
+    status = models.CharField('Status', max_length=10, blank=True, null=True)
     area = models.CharField('Area', max_length=30, blank=True, null=True)
     list_price = models.PositiveIntegerField(_('Price'), blank=True, null=True)
     beds = models.IntegerField(_('Beds'), blank=True, null=True)
@@ -60,8 +60,8 @@ class Unit(models.Model):
     days_market = models.IntegerField(_('Days on market'), blank=True, null=True)
     property_type = models.CharField(_('Property type'), choices=PropertyType.choices(), default=PropertyType.RENT,
                                      max_length=10)
-    rent_period = models.IntegerField(_('Rent Period'), blank=True, null=True)
-    furnished = models.CharField(_('Furnished'), max_length=50, blank=True, null=True)
+    rent_period = models.CharField(_('Rent Period'), max_length=50, blank=True, null=True)
+    furnished = models.BooleanField(_('Furnished'), default=False)
 
     def __str__(self):
         return (self.number + ' - ' + str(self.condo)) if self.condo else self.number
