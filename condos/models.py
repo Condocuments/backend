@@ -1,6 +1,6 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
+from django.utils.translation import ugettext_lazy as _
 
 from condocument_settings.helpers.enum import Types, PropertyType
 
@@ -99,6 +99,13 @@ class BedroomQuantity(models.Model):
 
     def __str__(self):
         return '(%s : %s ) - %s' % (str(self.condo), str(self.bedroom), str(self.quantity))
+
+    def get_quantity(self):
+        count = 0
+        for unit in self.condo.units.all():
+            if unit.property_type == self.type and unit.status.upper() == 'A':
+                count += 1
+        return count
 
 
 class Address(models.Model):
