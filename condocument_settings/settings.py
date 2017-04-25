@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     # 3rd parties
     'rest_framework',
+    'rest_framework_swagger'
 
 ]
 
@@ -116,9 +117,17 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.AllowAny'
     ]
 }
+
+# SWAGGER_SETTINGS = {
+#     'SECURITY_DEFINITIONS': {
+#         'basic': {
+#             'type': 'basic'
+#         }
+#     },
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

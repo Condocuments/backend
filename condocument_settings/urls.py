@@ -16,7 +16,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-from rest_framework import routers
+from rest_framework import response, schemas
+from rest_framework import routers, renderers
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
 from condocument_settings import settings
 from condos.views import CondoViewSet, AddressViewSet, UnitViewSet
@@ -30,14 +33,29 @@ def merge_strings(string, merge):
 
 admin.site.site_header = settings.ADMIN_TITLE
 
-router = routers.DefaultRouter()
+
+@api_view()
+@renderer_classes([SwaggerUIRenderer, OpenAPIRenderer, renderers.CoreJSONRenderer])
+def schema_view(request):
+    generator = schemas.SchemaGenerator(title='Condocuments API')
+    return response.Response(generator.get_schema(request=request))
+
+
+router = routers.DefaultRouter(trailing_slash=False)
 router.register(merge_strings(r'%s', 'condos'), CondoViewSet)
 router.register(merge_strings(r'%s', 'unit'), UnitViewSet)
 router.register(merge_strings(r'%s', 'address'), AddressViewSet)
 router.register(merge_strings(r'%s', 'users'), UserViewSet, base_name='users')
 
+API_VERSION = 'v1'
+
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    url('^$', schema_view),
+
+    url(r'^', include('django.contrib.auth.urls')),
+    url(r'^admin/', admin.site.urls),
+
+    url(r'^api/%s/' % API_VERSION, include(router.urls)),
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls'))
 ]

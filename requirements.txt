@@ -9,3 +9,4 @@ pinax-stripe==3.3.0
 pytz==2016.7
 requests==2.12.4
 stripe==1.44.0
+django-rest-swagger==2.1.2

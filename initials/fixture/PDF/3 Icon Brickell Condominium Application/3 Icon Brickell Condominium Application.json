@@ -1,0 +1,169 @@
+{
+  "signature" : {
+    "type": "str",
+    "value": "",
+    "required": true
+  },
+
+  "leasing_period_from": {
+    "type": "date",
+    "value": "",
+    "required": true
+  },
+
+  "leasing_period_to": {
+    "type": "date",
+    "value": "",
+    "required": true
+  },
+
+  "permanent_resident": {
+    "type": "bool",
+    "value": "True",
+    "required": true
+  },
+
+  "resident_name": {
+    "type": "str",
+    "value": "",
+    "required": true
+  },
+
+  "unit": {
+    "type": "str",
+    "value": "",
+    "required": true
+  },
+
+  "ssn": {
+    "type": "str",
+    "value": "",
+    "required": true
+  },
+
+  "date_of_birth": {
+    "type": "date",
+    "value": "",
+    "required": true
+  },
+
+  "billing_address": {
+    "type": "str",
+    "value": "",
+    "required": true
+  },
+
+  "home_telephone": {
+    "type": "str",
+    "value": "",
+    "required": true
+  },
+
+  "work_telephone": {
+    "type": "str",
+    "value": "",
+    "required": false
+  },
+
+  "email": {
+    "type": "str",
+    "value": "",
+    "required": true
+  },
+
+  "cell_telephone": {
+    "type": "str",
+    "value": "",
+    "required": true
+  },
+
+  "emergency_contact": {
+    "type": "str",
+    "value": "",
+    "required": false
+  },
+
+  "emergency_contact_telephone": {
+    "type": "str",
+    "value": "",
+    "required": false
+  },
+
+  "emergency_contact_relation": {
+    "type": "str",
+    "value": "",
+    "required": false
+  },
+
+  "pets": {
+    "type": "bool",
+    "value": false,
+    "required": true
+  },
+
+  "pets_list": {
+    "type": "str",
+    "value": "",
+    "required": false
+  },
+
+  "relationship": {
+    "type": "many",
+    "value": [
+      {
+        "name": "",
+        "relationship": "",
+        "phone_number": ""
+      }
+    ],
+    "required": false
+  },
+
+  "date_signed": {
+    "type": "dict",
+    "value": {
+      "day": "",
+      "month": "",
+      "year": ""
+    },
+    "required": true
+  },
+
+  "applicant": {
+    "type": "many",
+    "value": [{
+      "signature": "",
+      "name": "",
+      "date": ""
+    }],
+    "required": true
+  },
+
+  "driver_license_number": {
+    "type": "str",
+    "value": "",
+    "required": true
+  },
+
+  "driver_license_state": {
+    "type": "str",
+    "value": "Florida",
+    "required": true
+  },
+
+  "mailing_address": {
+    "type": "str",
+    "value": "",
+    "required": true
+  },
+
+  "relatives": {
+    "type": "many",
+    "value": [{
+      "name": "",
+      "description": "",
+      "phone_number": ""
+    }],
+    "required": false
+  }
+}

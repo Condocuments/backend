@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Your Jazwings Creator Contract</title>
+    <title>3 Icon Brickell Condominium Application</title>
 
 
     <link href="http://clients.getyourspark.com/160/css/bootstrap.min.css" rel="stylesheet">
@@ -133,10 +133,10 @@
         <tr>
         <tr class="border">
             <th class="border">
-                &nbsp;
+                &nbsp;{{ signature.value }}
             </th>
             <th class="border">
-                &nbsp;
+                {{date_signed.value.month}}-{{date_signed.value.day }}-{{date_signed.value.year}}
             </th>
         </tr>
 
@@ -151,41 +151,53 @@
         <h4>RESIDENT INFORMATION SHEET</h4>
     </div>
     <div>
-        <span>Rental (X) Leasing Period: From ___________ to ____________</span>
+        <span>Rental (X) Leasing Period: From {{ leasing_period_from.value }} to {{ leasing_period_to.value }}</span>
+    </div>
+    {% if permanent_resident.value %}
+    <div>
+        <span>Permanent Resident (X) Secondary Resident ( )</span>
+    </div>
+    {% else %}
+    <div>
+        <span>Permanent Resident ( ) Secondary Resident (X)</span>
+    </div>
+    {% endif %}
+    <div>
+        <span>Name of Resident: {{ resident_name.name }} Unit #: {{ unit.value }}</span>
     </div>
     <div>
-        <span>Permanent Resident ( ) Secondary Resident ( )</span>
+        <span>Social Security Number: {{ ssn.value }} Date of birth: {{ date_of_birth.value }}</span>
     </div>
     <div>
-        <span>Name of Resident: _____________________________ Unit #: ___________________</span>
+        <span>Mailing/Billing Address: {{ billing_address.value }}</span>
     </div>
     <div>
-        <span>Social Security Number: __________________________ Date of birth: ______________</span>
+        <span>Home Telephone #: {{ home_telephone.value }} Work #: {{ work_telephone.value }}</span>
     </div>
     <div>
-        <span>Mailing/Billing Address: ___________________________________________________________</span>
+        <span>E-mail:{{ email.value }} Cell #: {{ cell_telephone.value }}</span>
     </div>
     <div>
-        <span>Home Telephone #: ____________________ Work #: ___________________</span>
-    </div>
-    <div>
-        <span>E-mail:______________________________________________ Cell #: _____________________</span>
-    </div>
-    <div>
-        <span>Emergency Contact: _____________________________ Telephone #: ____________________</span>
+        <span>Emergency Contact: {{ emergency_contact.value }} Telephone #: {{ emergency_contact_telephone.value }}</span>
     </div>
 
     <div>
-        <span>Emergency Contact relationship: ____________________________________________________</span>
+        <span>Emergency Contact relationship: {{ emergency_contact_relation.value }}</span>
     </div>
+    {% if pets.value %}
     <div>
-        <span>Do you have any pets? Yes /No</span>
+        <span>Do you have any pets? <span style="text-decoration:underline;">Yes</span>/No</span>
     </div>
+    {% else %}
+    <div>
+        <span>Do you have any pets? Yes/<span style="text-decoration:underline;">No</span></span>
+    </div>
+    {% endif %}
     <div>
         <span>Please list the type of pet:</span>
     </div>
     <div>
-        <span>________________________________________________________________________</span>
+        <span>{{ pets_list.value }}</span>
     </div>
     <div>
         <br/>
@@ -201,61 +213,35 @@
             </th>
             <th width="34%">PHONE NUMBER</th>
         </tr>
+        {% for r in relationship.value %}
         <tr>
             <th>
-                __________________________
+                {{ r.name }}
             </th>
             <th>
-                _________________________
+                {{ r.relationship }}
             </th>
             <th>
-                ___________________
+                {{ r.phone_number }}
             </th>
         </tr>
-        <tr>
-            <th>
-                __________________________
-            </th>
-            <th>
-                _________________________
-            </th>
-            <th>
-                ___________________
-            </th>
-        </tr>
-        <tr>
-            <th>
-                __________________________
-            </th>
-            <th>
-                _________________________
-            </th>
-            <th>
-                ___________________
-            </th>
-        </tr>
-        <tr>
-            <th>
-                __________________________
-            </th>
-            <th>
-                _________________________
-            </th>
-            <th>
-                ___________________
-            </th>
-        </tr>
+        {% endfor %}
+
     </table>
     <div>
         <br/>
         <br/>
     </div>
     <div>
-        <span>Signed this ____ day of ____________________, 20___</span>
+        <span>Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}</span>
     </div>
+
+    {% for app in applicant.value %}
     <div>
-        <span>Signature: _________________________ Name Printed: ______________________________</span>
+        <span>Signature: {{ app.signature }} Name Printed: {{ app.name }}</span>
     </div>
+
+    {% endfor %}
 
 
 </div>
@@ -307,7 +293,7 @@
     </div>
 
     <div>
-        <span>Signed this ____ day of ____________________, 20___</span>
+        <span>Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}</span>
     </div>
 
     <div>
@@ -315,17 +301,14 @@
             APPLICANT
         </h3>
     </div>
-    <div>
-        <span>
-            Name Printed: _________________________ Name Printed: ______________________________
-        </span>
-    </div>
 
+    {% for app in applicant.value %}
     <div>
         <span>
-            Signature: ____________________________ Signature: _______________________________
+            Name Printed: {{ app.name }} Signature: {{ app.signature }}
         </span>
     </div>
+    {% endfor %}
 
     <div>
         <h3 class="header-bold-center">
@@ -374,12 +357,11 @@
         </h3>
     </div>
 
+    {% for app in applicant.value %}
     <div>
-        <span>(1) Applicant’s Signature:_______________________________ Date:______________</span>
+        <span>(1) Applicant’s Signature: {{ app.signature }} Date:{{ app.date }}</span>
     </div>
-    <div>
-        <span>(2) Applicant’s Signature:_______________________________ Date:______________</span>
-    </div>
+    {% endfor %}
 </div>
 <div class="container">
     <div>
@@ -405,15 +387,17 @@
             use of Iconbrickell Condominium Number Three Association.</p>
     </div>
     <div>
-        <span>Signed this ____ day of ____________________, 20___</span>
+        <span>Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ {{ date_signed.value.year }} }}</span>
     </div>
     <br/>
+
+    {% for app in applicant.value %}
     <div>
-        <span>Name Printed: _________________________ Name Printed: __________________________</span>
+        <span>Name Printed: {{ app.name }} Signature: {{ app.signature }}</span>
     </div>
-    <div>
-        <span>Signature: ____________________________ Signature: ______________________________</span>
-    </div>
+
+    {% endfor %}
+
 
 </div>
 <div class="container">
@@ -452,10 +436,10 @@
         <table>
             <tr>
                 <th>
-                    ______________________________
+                    {{ resident_name.value }}
                 </th>
                 <th class="th-padding">
-                    ______________________________
+                    {{ ssn.value }}
                 </th>
             </tr>
             <tr>
@@ -469,27 +453,10 @@
 
             <tr>
                 <th>
-                    ______________________________
-                </th>
-                <th class="th-padding">
-                    ______________________________
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    PRINT FULL NAME (S)
-                </th>
-                <th class="th-padding">
-                    SOCIAL SECURITY NUMBER (S)
-                </th>
-            </tr>
-
-            <tr>
-                <th>
-                    __________________________________________
+                    {{ driver_license_number.value }}&nbsp;{{ driver_license_state.value }}
                 </th>
                 <th style="padding-left: 5px;">
-                    ___________________
+                    {{ date_of_birth.value }}
                 </th>
             </tr>
             <tr>
@@ -503,7 +470,7 @@
 
             <tr>
                 <th>
-                    __________________________________________________________________
+                    {{ mailing_address.value }}
                 </th>
                 <th class="th-padding">
                     &nbsp;
@@ -518,29 +485,14 @@
                 </th>
             </tr>
 
-            <tr>
-                <th>
-                    X_______________________________________
-                </th>
-                <th class="th-padding">
-                    X________________
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    Lessee Signature
-                </th>
-                <th class="th-padding">
-                    Date
-                </th>
-            </tr>
 
+            {% for app in applicant.value %}
             <tr>
                 <th>
-                    X_______________________________________
+                    X{{ app.signature }}
                 </th>
                 <th class="th-padding">
-                    X________________
+                    X{{ app.date }}
                 </th>
             </tr>
             <tr>
@@ -551,6 +503,9 @@
                     Date
                 </th>
             </tr>
+            {% endfor %}
+
+
         </table>
     </div>
 
@@ -638,7 +593,7 @@
     <br/>
     <div>
         <span>
-            Signed this ____ day of ____________________, 20___
+            Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}
         </span>
     </div>
 
@@ -648,16 +603,16 @@
         </h4>
     </div>
 
+    {% for app in applicant.value %}
     <div>
         <span>
-            Name Printed: _________________________ Name Printed: ______________________________
+            Name Printed: {{ app.name }} Signature: {{ app.signature }}
         </span>
     </div>
-    <div>
-        <span>
-            Signature: ____________________________ Signature: _______________________________
-        </span>
-    </div>
+
+    {% endfor %}
+
+
 </div>
 <div class="container">
     <div>
@@ -667,8 +622,10 @@
     </div>
 
     <div>
-        <p>THIS RELEASE, indemnification and Hold Harmless Agreement (“Release”) is executed this _______ day of
-            ______________, 20___ by the undersigned Owner(s) or Lessee(s) of Unit # __________________ located in
+        <p>THIS RELEASE, indemnification and Hold Harmless Agreement (“Release”) is executed this {{
+            date_signed.value.day }} day of
+            {{ date_signed.value.month }}, {{ date_signed.value.year }} by the undersigned Owner(s) or Lessee(s) of Unit
+            # {{ unit.value }} located in
             <strong>Iconbrickell Condominium Number Three Association.</strong></p>
     </div>
 
@@ -732,14 +689,16 @@
 
     <div>
     <span>
-        Signed this ____ day of ____________________, 20___
+        Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}
     </span>
     </div>
 
     <div>
-    <span>
-        Signature: _________________________ Name Printed: ______________________________
-    </span>
+        {% for app in applicant.value %}
+        <span>
+        Signature: {{ app.signature}} Name Printed: {{ app.name }}
+        </span>
+        {% endfor %}
     </div>
 </div>
 
@@ -843,8 +802,9 @@
 
     <div>
         <p>
-            I, ___________________________________ hereby authorize the following persons to enter Unit # _________
-            Effective _______________ (Date) This authorization is valid until___________________________ (Date) I/we
+            I, {{ resident_name.value }} hereby authorize the following persons to enter Unit # {{ unit.value }}
+            Effective {{ leasing_period_from.value }} (Date) This authorization is valid until {{
+            leasing_period_to.value }} (Date) I/we
             hereby authorize and request the Association to grant access to the above Unit to the person(s) named below.
             In giving this authorization and request, the undersigned ACKNOWLEDGES AND AGREES:
         </p>
@@ -888,129 +848,34 @@
                     PHONE NUMBER
                 </td>
             </tr>
+            {% for relative in relatives.value %}
             <tr>
                 <td>
-                    _______________________
+                    {{ relative.name}}
                 </td>
                 <td>
-                    _______________________
+                    {{ relative.description }}
                 </td>
                 <td>
-                    ________________
+                    {{ relative.phone_number }}
                 </td>
             </tr>
-            <tr>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    ________________
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    ________________
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    ________________
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    ________________
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    ________________
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    ________________
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    ________________
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    ________________
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    _______________________
-                </td>
-                <td>
-                    ________________
-                </td>
-            </tr>
+            {% endfor %}
         </table>
     </div>
     <br/>
     <div>
         <p>
-            Signed this ____ day of ____________________, 20___
+            Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}
         </p>
     </div>
 
     <div>
+        {% for app in applicant.value %}
         <p>
-            Signature: _________________________ Name Printed: ______________________________
+            Signature: {{ app.signature }} Name Printed: {{ app.name }}
         </p>
+        {% endfor %}
     </div>
 
 
@@ -1056,7 +921,7 @@
 
     <div>
         <p>
-            I, ______________________________ Resident of Unit # __________ hereby acknowledge receipt of the key policy
+            I, {{ resident_name.value }} Resident of Unit # {{ unit.value }} hereby acknowledge receipt of the key policy
         </p>
     </div>
 
@@ -1066,14 +931,17 @@
 
     <div>
         <p>
-            Signed this ____ day of ____________________, 20___
+            Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}
         </p>
     </div>
 
     <div>
+
+       {% for app in applicant.value %}
         <p>
-            Signature: _________________________ Name Printed: ______________________________
+            Signature: {{ app.signature }} Name Printed: {{ app.name }}
         </p>
+        {% endfor %}
     </div>
 
 
@@ -1131,8 +999,12 @@
 
     <br/>
     <div>
-        <p>Signed this ____ day of ____________________, 20___</p>
-        <p>Signature: _________________________ Name Printed: ______________________________</p>
+        <p>Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}</p>
+        {% for app in applicant.value %}
+        <p>
+            Signature: {{ app.signature }} Name Printed: {{ app.name }}
+        </p>
+        {% endfor %}
 
     </div>
 
@@ -1228,10 +1100,12 @@
 
     <br/>
     <div>
-        <p>Signed this ____ day of ____________________, 20___</p>
-
-
-        <p>Signature: _________________________ Name Printed: ______________________________</p>
+       <p>Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}</p>
+        {% for app in applicant.value %}
+        <p>
+            Signature: {{ app.signature }} Name Printed: {{ app.name }}
+        </p>
+        {% endfor %}
     </div>
 
 </div>
@@ -1277,8 +1151,12 @@
     <br/>
     <br/>
     <div>
-        <p>Signed this ____ day of ____________________, 20___</p>
-        <p>Signature: _________________________ Name Printed: ______________________________</p>
+         <p>Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}</p>
+        {% for app in applicant.value %}
+        <p>
+            Signature: {{ app.signature }} Name Printed: {{ app.name }}
+        </p>
+        {% endfor %}
     </div>
 
 
@@ -1357,9 +1235,12 @@
     <br/>
     <br/>
     <div>
-        <p>Signed this ____ day of ____________________, 20___</p>
-
-        <p>Signature: _________________________ Name Printed: ______________________________</p>
+         <p>Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}</p>
+        {% for app in applicant.value %}
+        <p>
+            Signature: {{ app.signature }} Name Printed: {{ app.name }}
+        </p>
+        {% endfor %}
     </div>
 </div>
 <div class="container">
@@ -1500,9 +1381,12 @@
     <br/>
     <br/>
     <div>
-        <p>Signed this ____ day of ____________________, 20___</p>
-
-        <p>Signature: _________________________ Name Printed: ______________________________</p>
+         <p>Signed this {{ date_signed.value.day }} day of {{ date_signed.value.month }}, {{ date_signed.value.year }}</p>
+        {% for app in applicant.value %}
+        <p>
+            Signature: {{ app.signature }} Name Printed: {{ app.name }}
+        </p>
+        {% endfor %}
     </div>
 </div>
 

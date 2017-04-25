@@ -1,4 +1,8 @@
+from django.db.models import Q
+from rest_framework.decorators import list_route
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import ModelViewSet
 
 from condos.models import Condo, Unit, Address
@@ -13,6 +17,30 @@ class CondoViewSet(ModelViewSet):
     serializer_class = CondoSerializer
     lookup_field = 'slug'
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    @list_route(methods=['get'])
+    def search(self, request, query=None):
+        query = query or self.request.query_params['query']
+        words = query.strip().split()
+        condos = []
+        for word in words:
+            condos_temp = Condo.objects.filter(
+                Q(name_icontains=word) | Q(location__icontains=word) | Q(county__icontains=word))
+
+            address = Address.objects.filter(
+                Q(line_1_icontains=word) | Q(city__icontains=word) | Q(state__icontains=word) | Q(
+                    zip_code__icontains=word) | Q(area__icontains=word))
+            for condo in condos_temp:
+                condos.append(condo)
+            for add in address:
+                condos.append(add.condo)
+            break
+        condo_serializer = self.get_serializer()
+        serializer = condo_serializer(condos, context={'request': request}, many=True)
+        if serializer.data:
+            return Response(serializer.data, status=HTTP_200_OK)
+        else:
+            return Response({'Error': 'Error serializing data'}, status=HTTP_400_BAD_REQUEST)
 
 
 class UnitViewSet(ModelViewSet):
