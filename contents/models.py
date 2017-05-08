@@ -24,4 +24,4 @@ class Content(models.Model):
                             default=ContentType.CONDO)
 
     def __str__(self):
-        return ' - '.join((self.type.verbose_name, self.pk))
+        return ' - '.join((self.type, self.pk))
