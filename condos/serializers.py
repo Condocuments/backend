@@ -37,7 +37,7 @@ class CondoSerializer(ModelSerializer):
     condo_offer = BedroomQuantitySerializer(many=True)
     address = AddressSerializer()
     applications = ApplicationSerializer(many=True)
-    content = ContentSerializer(many=True)
+    condo_contents = ContentSerializer(many=True)
 
     class Meta:
         fields = '__all__'
