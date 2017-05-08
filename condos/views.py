@@ -1,5 +1,5 @@
 from django.db.models import Q
-from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route, detail_route
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
@@ -41,6 +41,16 @@ class CondoViewSet(ModelViewSet):
             return Response(serializer.data, status=HTTP_200_OK)
         else:
             return Response({'Error': 'Error serializing data'}, status=HTTP_400_BAD_REQUEST)
+
+    @detail_route(methods=['get'])
+    def unit(self, request, slug=None):
+        try:
+            condo = Condo.objects.get(slug=slug)
+        except Condo.DoesNotExist:
+            return Response("Condo not Found", status=HTTP_400_BAD_REQUEST)
+        units = Unit.objects.filter(condo=condo)
+        serializer = UnitSerializer(units, many=True, context={'request': request})
+        return Response(serializer.data, status=HTTP_200_OK)
 
 
 class UnitViewSet(ModelViewSet):
