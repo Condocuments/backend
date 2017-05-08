@@ -1,5 +1,6 @@
 from rest_framework.fields import ReadOnlyField
 from rest_framework.serializers import ModelSerializer
+from contents.serializers import ContentSerializer
 
 from condos.models import Condo, Bedroom, BedroomQuantity, Address, Application, Unit
 
@@ -36,6 +37,7 @@ class CondoSerializer(ModelSerializer):
     condo_offer = BedroomQuantitySerializer(many=True)
     address = AddressSerializer()
     applications = ApplicationSerializer(many=True)
+    content = ContentSerializer(many=True)
 
     class Meta:
         fields = '__all__'
