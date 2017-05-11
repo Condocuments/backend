@@ -132,6 +132,27 @@ REST_FRAMEWORK = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+SITE_ID = 1
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = (
+    '*',
+)
+
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'Access-Control-Allow-Headers',
+    'cache-control'
+)
+
 AUTH_USER_MODEL = 'people.User'
 
 LANGUAGE_CODE = 'en-us'
