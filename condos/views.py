@@ -25,10 +25,10 @@ class CondoViewSet(ModelViewSet):
         condos = []
         for word in words:
             condos_temp = Condo.objects.filter(
-                Q(name_icontains=word) | Q(location__icontains=word) | Q(county__icontains=word))
+                Q(name__icontains=word) | Q(location__icontains=word) | Q(county__icontains=word))
 
             address = Address.objects.filter(
-                Q(line_1_icontains=word) | Q(city__icontains=word) | Q(state__icontains=word) | Q(
+                Q(line_1__icontains=word) | Q(city__icontains=word) | Q(state__icontains=word) | Q(
                     zip_code__icontains=word) | Q(area__icontains=word))
             for condo in condos_temp:
                 condos.append(condo)
