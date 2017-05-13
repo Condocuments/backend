@@ -40,7 +40,7 @@ class CondoViewSet(ModelViewSet):
         if serializer.data:
             return Response(serializer.data, status=HTTP_200_OK)
         else:
-            return Response({'Error': 'Error serializing data, ' +  str(len(condos))}, status=HTTP_400_BAD_REQUEST)
+            return Response([{}], status=HTTP_200_OK)
 
     @detail_route(methods=['get'])
     def unit(self, request, slug=None):
