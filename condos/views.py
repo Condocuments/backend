@@ -35,8 +35,7 @@ class CondoViewSet(ModelViewSet):
             for add in address:
                 condos.append(add.condo)
             break
-        condo_serializer = self.get_serializer()
-        serializer = condo_serializer(condos, context={'request': request}, many=True)
+        serializer = CondoSerializer(condos, context={'request': request}, many=True)
         if serializer.data:
             return Response(serializer.data, status=HTTP_200_OK)
         else:
