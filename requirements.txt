@@ -12,3 +12,4 @@ stripe==1.44.0
 django-rest-swagger==2.1.2
 dateutils==0.6.6
 django-cors-headers==2.0.2
+django-loginas
