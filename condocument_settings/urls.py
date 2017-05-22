@@ -20,6 +20,7 @@ from rest_framework import response, schemas
 from rest_framework import routers, renderers
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
+from rest_framework.authtoken import views
 
 from condocument_settings import settings
 from condos.views import CondoViewSet, AddressViewSet, UnitViewSet
@@ -54,9 +55,9 @@ urlpatterns = [
 
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^admin/', admin.site.urls),
-
+    url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^api/%s/' % API_VERSION, include(router.urls)),
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', include('loginas.urls')),
     url(r'^api-auth/', include('rest_framework.urls'))
 ]
 

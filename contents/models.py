@@ -14,14 +14,14 @@ class Content(models.Model):
         verbose_name = 'Content'
         verbose_name_plural = 'Contents'
 
-    info = models.FileField(verbose_name=_('Info'), upload_to='info')
+    info = models.FileField(verbose_name=_('Info'), upload_to='info', blank=True, null=True)
     description = models.TextField(verbose_name=_('Description'), max_length=200, blank=True, null=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name=_('User'), related_name='user_contents',
                              null=True,
                              blank=True)
     condo = models.ForeignKey(to=Condo, verbose_name=_('Condo'), related_name='condo_contents', blank=True, null=True)
     type = models.CharField(verbose_name=_('Type'), choices=ContentType.choices(), max_length=10,
-                            default=ContentType.CONDO)
+                            default=ContentType.CONDO, blank=True, null=True)
 
     def __str__(self):
         return ' - '.join((str(self.type), str(self.pk)))

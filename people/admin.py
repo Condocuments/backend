@@ -1,7 +1,9 @@
 from django.contrib import admin
-
-from people.models import User
+from rest_framework.authtoken.admin import TokenAdmin
+from django.contrib.auth.admin import UserAdmin
 from contents.models import Content
+from people.forms import PersonAdminForm
+from people.models import User
 
 
 # Register your models here.
@@ -12,7 +14,8 @@ class ContentAdmin(admin.StackedInline):
     extra = 3
 
 
-class UserAdmin(admin.ModelAdmin):
+class IUserAdmin(UserAdmin):
+    form = PersonAdminForm
     list_display = ('username', 'first_name', 'last_name', 'ssn', 'license')
     inlines = [ContentAdmin, ]
 
@@ -32,6 +35,8 @@ class UserAdmin(admin.ModelAdmin):
         }),
         (None, {
             'fields': (
+                'password1',
+                'password2',
                 'password',
             )
         }),
@@ -50,5 +55,16 @@ class UserAdmin(admin.ModelAdmin):
         }),
     )
 
+    list_filter = ('is_active', 'is_staff', 'is_superuser')
 
-admin.site.register(User, UserAdmin)
+    def get_fieldsets(self, request, obj=None):
+        return self.fieldsets
+
+    def get_form(self, request, obj=None, **kwargs):
+        defaults = {}
+        defaults.update(kwargs)
+        return super(UserAdmin, self).get_form(request, obj, **defaults)
+
+
+admin.site.register(User, IUserAdmin)
+TokenAdmin.raw_id_fields = ('user',)

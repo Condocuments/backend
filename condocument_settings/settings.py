@@ -46,7 +46,9 @@ INSTALLED_APPS = [
 
     # 3rd parties
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_swagger',
+    'loginas',
     'corsheaders'
 
 ]
@@ -120,7 +122,10 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
 
 # SWAGGER_SETTINGS = {
