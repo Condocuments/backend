@@ -7,8 +7,19 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         lookup_field = 'username'
-        fields = '__all__'
 
+        exclude = (
+            'groups',
+            'is_staff',
+            'is_superuser',
+            'user_permissions',
+            'password',
+            'is_active',
+            'date_joined',
+            'birth_date'
+        )
         extra_kwargs = {
-            'url': {'lookup_field': 'username'}
+            'url': {'lookup_field': 'username'},
+            'ssn': {'write_only': True},
+            'license': {'write_only': True},
         }
